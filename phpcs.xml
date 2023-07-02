@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!-- phpのファイルがコーディング規約に則っているかを診断するためのphpcsの設定ファイル -->
+<ruleset name="phpcs rules">
+    <rule ref="PSR2"></rule>
+    <!-- 除外するファイル・ディレクトリ -->
+    <exclude-pattern>*/node_modules/*</exclude-pattern>
+    <exclude-pattern>*/vendor/*</exclude-pattern>
+    <exclude-pattern>*/build/*</exclude-pattern>
+    <exclude-pattern>*/bundle/*</exclude-pattern>
+    <exclude-pattern>*/image/*</exclude-pattern>
+    <exclude-pattern>*/template/*</exclude-pattern>
+    <exclude-pattern>*/*.js</exclude-pattern>
+    <exclude-pattern>*/*.ts</exclude-pattern>
+    <exclude-pattern>*/*.tsx</exclude-pattern>
+    <exclude-pattern>*/*.scss</exclude-pattern>
+    <exclude-pattern>*/*.xml</exclude-pattern>
+    <exclude-pattern>*/*.html</exclude-pattern>
+    <exclude-pattern>*/*.md</exclude-pattern>
+    <exclude-pattern>*/*.zip</exclude-pattern>
+</ruleset>

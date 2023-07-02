@@ -1,0 +1,17 @@
+# vscode settings
+.vscode
+
+# node
+node_modules
+
+# macOS
+.DS_Store
+
+# build
+build
+# tmp directory
+./V2
+
+vendor
+*.log
+.phplint-cache
