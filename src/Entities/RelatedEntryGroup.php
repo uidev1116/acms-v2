@@ -9,7 +9,6 @@ namespace Acms\Plugins\V2\Entities;
  */
 class RelatedEntryGroup
 {
-
     /**
      * 関連タイプ
      */

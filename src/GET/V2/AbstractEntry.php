@@ -9,7 +9,6 @@ use Template;
 use Acms\Services\Facades\Application as App;
 use Acms\Services\Facades\Database as DB;
 use Acms\Services\Facades\Template as Tpl;
-
 use Acms\Plugins\V2\Repositories\EntryRepository;
 
 // TODO: リビジョン対応
@@ -24,7 +23,7 @@ abstract class AbstractEntry extends ACMS_GET
     protected array $config;
     protected string $amountQuery;
 
-    public $_axis = [
+    public $_axis = [ // phpcs:ignore
         'bid' => 'self',
         'cid' => 'self',
     ];
@@ -141,7 +140,8 @@ abstract class AbstractEntry extends ACMS_GET
                 ] : []),
                 'notFound' => $this->buildNotFound($Tpl),
                 ...$this->getRootVars()
-            ]);;
+            ]);
+            ;
         }
 
         if (
@@ -150,7 +150,6 @@ abstract class AbstractEntry extends ACMS_GET
             $this->config['serialEntryOn'] === 'on' &&
             $this->config['order'][0] !== 'random'
         ) {
-
             [$PrevEntry, $NextEntry] = $this->findSerialEntries($Entries[0]);
         }
 

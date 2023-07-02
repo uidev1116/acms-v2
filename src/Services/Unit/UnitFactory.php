@@ -20,6 +20,6 @@ class UnitFactory extends Factory
             throw new \RuntimeException('Not found unit.');
         }
 
-        return new $this->_collection[$namespace];
+        return new $this->_collection[$namespace]();
     }
 }

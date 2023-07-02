@@ -6,7 +6,6 @@ namespace Acms\Plugins\V2\Entities;
 
 use Acms\Services\Facades\Common;
 use Acms\Services\Facades\RichEditor;
-
 use Acms\Plugins\V2\Entities\Master\EntryApproval;
 use Acms\Plugins\V2\Entities\Master\EntryStatus;
 use Acms\Plugins\V2\Entities\Master\UnitType;

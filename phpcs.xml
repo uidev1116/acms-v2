@@ -1,20 +1,21 @@
 <?xml version="1.0"?>
 <!-- phpのファイルがコーディング規約に則っているかを診断するためのphpcsの設定ファイル -->
 <ruleset name="phpcs rules">
-    <rule ref="PSR2"></rule>
+    <rule ref="PSR12"></rule>
+
+    <!-- 拡張子が php のものにだけ適用 -->
+    <arg name="extensions" value="php" />
+
+    <!-- 出力に色を適用 -->
+    <arg name="colors" />
+
+    <!-- オプション p:進捗表示  s:エラー表示時にルールを表示 -->
+    <arg value="ps" />
+
+    <!-- 適用するファイル・ディレクトリ -->
+    <file>src/</file>
+
     <!-- 除外するファイル・ディレクトリ -->
-    <exclude-pattern>*/node_modules/*</exclude-pattern>
     <exclude-pattern>*/vendor/*</exclude-pattern>
     <exclude-pattern>*/build/*</exclude-pattern>
-    <exclude-pattern>*/bundle/*</exclude-pattern>
-    <exclude-pattern>*/image/*</exclude-pattern>
-    <exclude-pattern>*/template/*</exclude-pattern>
-    <exclude-pattern>*/*.js</exclude-pattern>
-    <exclude-pattern>*/*.ts</exclude-pattern>
-    <exclude-pattern>*/*.tsx</exclude-pattern>
-    <exclude-pattern>*/*.scss</exclude-pattern>
-    <exclude-pattern>*/*.xml</exclude-pattern>
-    <exclude-pattern>*/*.html</exclude-pattern>
-    <exclude-pattern>*/*.md</exclude-pattern>
-    <exclude-pattern>*/*.zip</exclude-pattern>
 </ruleset>

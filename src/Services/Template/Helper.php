@@ -4,9 +4,7 @@ namespace Acms\Plugins\V2\Services\Template;
 
 use Template;
 use Acms\Services\Template\Helper as Base;
-
 use Acms\Plugins\V2\Services\Unit\UnitFactory;
-
 use Acms\Plugins\V2\Entities\Master\EntryApproval;
 use Acms\Plugins\V2\Entities\Master\UnitType;
 use Acms\Plugins\V2\Entities\Blog;
@@ -237,7 +235,8 @@ class Helper extends Base
         }
 
         // filter hidden uint
-        if (0
+        if (
+            0
             || !sessionWithContribution(BID)
             || !roleEntryUpdateAuthorization(BID, [
                 'entry_id' => $Entry->getId(),
@@ -749,7 +748,7 @@ class Helper extends Base
                     } else {
                         $y = 0;
                     }
-                } else if ($unitY < $config['imageY']) {
+                } elseif ($unitY < $config['imageY']) {
                     $y = $config['imageY'];
                     if ($config['imageY'] > 0 && $unitY > 0) {
                         $x = round($unitX * ($config['imageY'] / $unitY));
@@ -796,7 +795,7 @@ class Helper extends Base
                     $x = $config['imageX'];
                     $y = round($unitY / ($unitX / $config['imageX']));
                 }
-            } else if ($unitY > $config['imageY']) {
+            } elseif ($unitY > $config['imageY']) {
                 $y = $config['imageY'];
                 $x = round($unitX / ($unitY / $config['imageY']));
             } else {

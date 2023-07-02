@@ -5,7 +5,6 @@ namespace Acms\Plugins\V2;
 use ACMS_App;
 use Acms\Services\Facades\Application as Container;
 use Acms\Services\Common\InjectTemplate;
-
 use Acms\Plugins\V2\Services\Unit\UnitFactory;
 
 class ServiceProvider extends ACMS_App

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Acms\Plugins\V2\Entities;
 
-
 /**
  * 位置情報
  */

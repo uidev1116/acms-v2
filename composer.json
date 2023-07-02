@@ -1,0 +1,15 @@
+{
+  "name": "uidev1116/acms-v2",
+  "description": "ビルトインモジュール Ver.2.0を提供する拡張アプリです。",
+  "scripts": {
+    "lint": [
+        "vendor/bin/phpcs --standard=phpcs.xml"
+    ],
+    "format": [
+        "vendor/bin/phpcbf --standard=phpcs.xml"
+    ]
+  },
+  "require-dev": {
+    "squizlabs/php_codesniffer": "^3.7"
+  }
+}

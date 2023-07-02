@@ -3,10 +3,8 @@
 namespace Acms\Plugins\V2\Repositories;
 
 use DateTimeImmutable;
-
 use Acms\Plugins\V2\Entities\Blog;
 use Acms\Plugins\V2\Entities\Module;
-
 use SQL;
 use DB;
 
@@ -23,7 +21,7 @@ class ModuleRepository
     public function __construct(\Acms\Services\Container $container)
     {
     }
-    
+
     /**
      * 指定したモジュールIDのメディアを取得する
      * @param int[] $mids

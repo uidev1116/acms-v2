@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Acms\Plugins\V2\Entities;
 
 use DateTimeImmutable;
-
 use Acms\Plugins\V2\Entities\Master\Axis;
 use Acms\Plugins\V2\Entities\Master\ModuleScope;
 

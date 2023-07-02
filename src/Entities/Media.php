@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Acms\Plugins\V2\Entities;
 
 use Acms\Services\Facades\Media as MediaService;
-
 use Acms\Plugins\V2\Entities\Master\MediaType;
 
 /**

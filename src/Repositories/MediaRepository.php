@@ -3,11 +3,9 @@
 namespace Acms\Plugins\V2\Repositories;
 
 use DateTimeImmutable;
-
 use Acms\Plugins\V2\Entities\Media;
 use Acms\Plugins\V2\Entities\Blog;
 use Acms\Plugins\V2\Entities\User;
-
 use SQL;
 use DB;
 
@@ -16,7 +14,6 @@ use DB;
  */
 class MediaRepository
 {
-
     /**
      * 初期化処理
      *

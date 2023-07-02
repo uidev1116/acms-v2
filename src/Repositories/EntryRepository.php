@@ -3,15 +3,11 @@
 namespace Acms\Plugins\V2\Repositories;
 
 use DateTimeImmutable;
-
-use function Symfony\Component\String\u;
-
 use ACMS_Filter;
 use ACMS_RAM;
 use SQL;
 use SQL_Select;
 use Acms\Services\Facades\Database as DB;
-
 use Acms\Plugins\V2\Entities\Master\UnitType;
 use Acms\Plugins\V2\Entities\Blog;
 use Acms\Plugins\V2\Entities\Category;
@@ -23,6 +19,8 @@ use Acms\Plugins\V2\Entities\RelatedEntryGroup;
 use Acms\Plugins\V2\Entities\Tag;
 use Acms\Plugins\V2\Entities\Unit;
 use Acms\Plugins\V2\Entities\User;
+
+use function Symfony\Component\String\u;
 
 /**
  * エントリーのリポジトリ
@@ -432,7 +430,8 @@ class EntryRepository
 
     protected function setSelect(SQL_Select $sql)
     {
-        foreach ([
+        foreach (
+            [
             [
                 'field' => 'entry_id',
                 'alias' => null,
@@ -1183,7 +1182,8 @@ class EntryRepository
                 'scope' => 'geo',
                 'function' => null
             ],
-        ] as $select) {
+            ] as $select
+        ) {
             $sql->addSelect(
                 $select['field'],
                 $select['alias'],
@@ -1351,7 +1351,7 @@ class EntryRepository
                 } else {
                     ACMS_Filter::categoryTree($categorySubQuery, $cid, $axis, 'category');
                 }
-            } else if (strpos($cid, ',') !== false) {
+            } elseif (strpos($cid, ',') !== false) {
                 $categorySubQuery->addWhereIn('category_id', explode(',', $cid));
                 $multi = true;
             }
@@ -1380,7 +1380,7 @@ class EntryRepository
         if (!empty($uid)) {
             if (is_int($uid)) {
                 $sql->addWhereOpr('entry_user_id', $uid);
-            } else if (strpos($uid, ',') !== false) {
+            } elseif (strpos($uid, ',') !== false) {
                 $sql->addWhereIn('entry_user_id', explode(',', $uid));
                 $multi = true;
             }
@@ -1402,7 +1402,7 @@ class EntryRepository
         if (!empty($eid)) {
             if (is_int($eid)) {
                 $sql->addWhereOpr('entry_id', $eid);
-            } else if (strpos($eid, ',') !== false) {
+            } elseif (strpos($eid, ',') !== false) {
                 $sql->addWhereIn('entry_id', explode(',', $eid));
                 $multi = true;
             }
@@ -1435,7 +1435,7 @@ class EntryRepository
             } else {
                 ACMS_Filter::blogStatus($sql, 'blog');
             }
-        } else if (!empty($bid)) {
+        } elseif (!empty($bid)) {
             $blogSubQuery = SQL::newSelect('blog');
             $blogSubQuery->setSelect('blog_id');
             if (is_int($bid)) {
@@ -1545,45 +1545,65 @@ class EntryRepository
         ];
 
         // 関連エントリーのEagerLoading
-        if ($relatedEntriyData = $this->relatedEntryEagerLoad($entries, $config)) {
-            $eargerLoad['relatedEntry'] = $relatedEntriyData;
-        }
+        $eargerLoad['relatedEntry'] = $this->relatedEntryEagerLoad($entries, $config)
+
         // ユニットのEagerLoading
-        if ($unitData = $this->unitEagerLoad($entries, $config)) {
-            $eargerLoad['unit'] = $unitData;
-        }
+        $eargerLoad['unit'] = $this->unitEagerLoad($entries, $config);
+
         // モジュールのEagerLoading
-        if ($moduleData = $this->moduleEagerLoad($unitData, $config)) {
-            $eargerLoad['module'] = $moduleData;
-        }
+        $eargerLoad['module'] = $this->moduleEagerLoad($unitData, $config);
+
         // メディアのEagerLoading
-        if ($mediaData = $this->mediaEagerLoad($entries, $relatedEntriyData, $unitData, $config)) {
-            $eargerLoad['media'] = $mediaData;
-        }
+        $eargerLoad['media'] = $this->mediaEagerLoad(
+            $entries,
+            $eargerLoad['relatedEntry'],
+            $eargerLoad['unit'],
+            $config
+        );
+
         // タグのEagerLoading
-        if ($tagData = $this->tagEagerLoad($entries, $relatedEntriyData, $config)) {
-            $eargerLoad['tag'] = $tagData;
-        }
+        $eargerLoad['tag'] = $this->tagEagerLoad(
+            $entries,
+            $eargerLoad['relatedEntry'],
+            $config
+        );
+
         // サブカテゴリーのEagerLoading
-        if ($subCategoryData = $this->subCategoryEagerLoad($entries, $relatedEntriyData, $config)) {
-            $eargerLoad['subCategory'] = $subCategoryData;
-        }
+        $eargerLoad['subCategory'] = $this->subCategoryEagerLoad(
+            $entries,
+            $eargerLoad['relatedEntry'],
+            $config
+        );
+
         // エントリーフィールドのEagerLoading
-        if ($entryFieldData = $this->entryFieldEagerLoad($entries, $relatedEntriyData, $config)) {
-            $eargerLoad['entryField'] = $entryFieldData;
-        }
+        $eargerLoad['entryField'] = $this->entryFieldEagerLoad(
+            $entries,
+            $eargerLoad['relatedEntry'],
+            $config
+        );
+
         // ユーザーフィールドのEagerLoading
-        if ($userFieldData = $this->userFieldEagerLoad($entries, $relatedEntriyData, $config)) {
-            $eargerLoad['userField'] = $userFieldData;
-        }
+        $eargerLoad['userField'] = $this->userFieldEagerLoad(
+            $entries,
+            $eargerLoad['relatedEntry'],
+            $config
+        );
+
         // カテゴリーフィールドのEagerLoading
-        if ($categoryFieldData = $this->categoryFieldEagerLoad($entries, $subCategoryData, $relatedEntriyData, $config)) {
-            $eargerLoad['categoryField'] = $categoryFieldData;
-        }
+        $eargerLoad['categoryField'] = $this->categoryFieldEagerLoad(
+            $entries,
+            $eargerLoad['subCategory'],
+            $eargerLoad['relatedEntry'],
+            $config
+        );
+
         // ブログフィールドのEagerLoading
-        if ($blogFieldData = $this->blogFieldEagerLoad($entries, $subCategoryData, $relatedEntriyData, $config)) {
-            $eargerLoad['blogField'] = $blogFieldData;
-        }
+        $eargerLoad['blogField'] = $this->blogFieldEagerLoad(
+            $entries,
+            $eargerLoad['subCategory'],
+            $eargerLoad['relatedEntry'],
+            $config
+        );
 
         return $eargerLoad;
     }
@@ -1619,12 +1639,14 @@ class EntryRepository
             ACMS_Filter::entrySession($sql);
             $sql->addWhereIn('relation_id', $entryIds);
             $sql->setOrder('relation_order', 'ASC');
-            foreach ([
+            foreach (
+                [
                 'relation_id',
                 'relation_eid',
                 'relation_type',
                 'relation_order',
-            ] as $field) {
+                ] as $field
+            ) {
                 $sql->addSelect($field);
             }
             $this->setSelect($sql);
@@ -1657,7 +1679,8 @@ class EntryRepository
      */
     protected function unitEagerLoad(array $entries, array $config): array
     {
-        if (0 ||
+        if (
+            0 ||
             (isset($config['unitInfoOn']) && $config['unitInfoOn'] === 'on') ||
             (isset($config['fullTextOn']) && $config['fullTextOn'] === 'on')
         ) {
@@ -1882,7 +1905,8 @@ class EntryRepository
             $sql->addLeftJoin('category', 'category_id', 'entry_sub_category_id');
             $sql->addLeftJoin('blog', 'blog_id', 'category_blog_id', 'category_blog');
             $sql->addWhereIn('entry_sub_category_eid', array_unique($entryIds));
-            foreach ([
+            foreach (
+                [
                 [
                     'field' => '*',
                     'alias' => null,
@@ -1955,7 +1979,8 @@ class EntryRepository
                     'scope' => 'category_blog',
                     'function' => null
                 ],
-            ] as $select) {
+                ] as $select
+            ) {
                 $sql->addSelect(
                     $select['field'],
                     $select['alias'],
@@ -2303,7 +2328,9 @@ class EntryRepository
         $LastUpdateUserBlog->setLeft(intval($row['last_update_user_blog_blog_left']));
         $LastUpdateUserBlog->setRight(intval($row['last_update_user_blog_blog_right']));
         $LastUpdateUserBlog->setDomain($row['last_update_user_blog_blog_domain']);
-        $LastUpdateUserBlog->setGeneratedDatetime(new DateTimeImmutable($row['last_update_user_blog_blog_generated_datetime']));
+        $LastUpdateUserBlog->setGeneratedDatetime(
+            new DateTimeImmutable($row['last_update_user_blog_blog_generated_datetime'])
+        );
         $LastUpdateUserBlog->setIndexing($row['last_update_user_blog_blog_indexing']);
         if (array_key_exists(intval($row['last_update_user_blog_blog_id']), $blogField)) {
             $LastUpdateUserBlog->setField($blogField[intval($row['last_update_user_blog_blog_id'])]);
@@ -2401,9 +2428,17 @@ class EntryRepository
                             ? floatval($unit['column_size'])
                             : $unit['column_size']
                     );
-                    if ($unit['column_type'] === UnitType::MEDIA && array_key_exists(intval($unit['column_field_1']), $media)) {
+                    if (
+                        1 &&
+                        $unit['column_type'] === UnitType::MEDIA &&
+                        array_key_exists(intval($unit['column_field_1']), $media)
+                    ) {
                         $Unit->setField1($media[intval($unit['column_field_1'])]);
-                    } elseif ($unit['column_type'] === UnitType::MODULE && array_key_exists(intval($unit['column_field_1']), $module)) {
+                    } elseif (
+                        1 &&
+                        $unit['column_type'] === UnitType::MODULE &&
+                        array_key_exists(intval($unit['column_field_1']), $module)
+                    ) {
                         $Unit->setField1($module[intval($unit['column_field_1'])]);
                     } else {
                         $Unit->setField1($unit['column_field_1']);
@@ -2437,7 +2472,9 @@ class EntryRepository
                     $SubCategoryBlog->setLeft(intval($subCategory['category_blog_blog_left']));
                     $SubCategoryBlog->setRight(intval($subCategory['category_blog_blog_right']));
                     $SubCategoryBlog->setDomain($subCategory['category_blog_blog_domain']);
-                    $SubCategoryBlog->setGeneratedDatetime(new DateTimeImmutable($subCategory['category_blog_blog_generated_datetime']));
+                    $SubCategoryBlog->setGeneratedDatetime(
+                        new DateTimeImmutable($subCategory['category_blog_blog_generated_datetime'])
+                    );
                     $SubCategoryBlog->setIndexing($subCategory['category_blog_blog_indexing']);
                     if (array_key_exists(intval($subCategory['category_blog_blog_id']), $blogField)) {
                         $SubCategoryBlog->setField($blogField[intval($subCategory['category_blog_blog_id'])]);

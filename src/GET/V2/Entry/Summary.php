@@ -6,7 +6,7 @@ use Acms\Plugins\V2\GET\V2\AbstractEntry;
 
 class Summary extends AbstractEntry
 {
-    public $_axis = [
+    public $_axis = [ // phpcs:ignore
         'bid' => 'self',
         'cid' => 'self',
     ];

@@ -15,7 +15,8 @@ class User
     public function getLargeIcon(): ?string
     {
         $path = ARCHIVES_DIR . $this->icon;
-        if (1 &&
+        if (
+            1 &&
             !empty($path) &&
             Storage::isReadable($path) &&
             Storage::isFile($path)
@@ -199,7 +200,8 @@ class User
     public function getIcon(): string
     {
         $path = ARCHIVES_DIR . $this->icon;
-        if (1 &&
+        if (
+            1 &&
             !empty($path) &&
             Storage::isReadable($path) &&
             Storage::isFile($path)
