@@ -20,8 +20,6 @@ use Acms\Plugins\V2\Entities\Tag;
 use Acms\Plugins\V2\Entities\Unit;
 use Acms\Plugins\V2\Entities\User;
 
-use function Symfony\Component\String\u;
-
 /**
  * エントリーのリポジトリ
  */
@@ -327,36 +325,75 @@ class EntryRepository
 
         switch ($sort1) {
             case 'id':
+                $field = 'entry_id';
+                $value = $Entry->getId();
+                break;
             case 'code':
+                $field = 'entry_code';
+                $value = $Entry->getCode();
+                break;
             case 'status':
+                $field = 'entry_status';
+                $value = $Entry->getStatus();
+                break;
             case 'sort':
+                $field = 'entry_sort';
+                $value = $Entry->getSort();
+                break;
             case 'user_sort':
+                $field = 'entry_user_sort';
+                $value = $Entry->getUserSort();
+                break;
             case 'category_sort':
+                $field = 'entry_category_sort';
+                $value = $Entry->getCategorySort();
+                break;
             case 'title':
+                $field = 'entry_title';
+                $value = $Entry->getTitle();
+                break;
             case 'link':
+                $field = 'entry_link';
+                $value = $Entry->getLink();
+                break;
             case 'summary_range':
+                $field = 'entry_summary_range';
+                $value = $Entry->getSummaryRange();
+                break;
             case 'indexing':
+                $field = 'entry_indexing';
+                $value = $Entry->getIndexing();
+                break;
             case 'primary_image':
-                $field = 'entry_' . $sort1;
-                $value = $Entry->{'get' . u($sort1)->camel()->title()}();
+                $field = 'entry_primary_image';
+                $value = $Entry->getPrimaryImage()->getId();
                 break;
             case 'datetime':
+                $field = 'entry_datetime';
+                $value = $Entry->getDatetime()->format('Y-m-d H:i:s');
+                break;
             case 'start_datetime':
+                $field = 'entry_start_datetime';
+                $value = $Entry->getStartDatetime()->format('Y-m-d H:i:s');
+                break;
             case 'end_datetime':
+                $field = 'entry_end_datetime';
+                $value = $Entry->getEndDatetime()->format('Y-m-d H:i:s');
+                break;
             case 'posted_datetime':
-                $field = 'entry_' . $sort1;
-                $value = $Entry->{'get' . u($sort1)->camel()->title()}()->format('Y-m-d H:i:s');
+                $field = 'entry_posted_datetime';
+                $value = $Entry->getPostedDatetime()->format('Y-m-d H:i:s');
                 break;
             case 'category_id':
-                $field = 'entry_' . $sort1;
+                $field = 'entry_category_id';
                 $value = $Entry->getCategory()->getId();
                 break;
             case 'user_id':
-                $field = 'entry_' . $sort1;
+                $field = 'entry_user_id';
                 $value = $Entry->getUser()->getId();
                 break;
             case 'blog_id':
-                $field = 'entry_' . $sort1;
+                $field = 'entry_blog_id';
                 $value = $Entry->getBlog()->getId();
                 break;
             default:

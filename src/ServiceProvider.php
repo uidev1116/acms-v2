@@ -44,8 +44,6 @@ class ServiceProvider extends ACMS_App
      */
     public function init()
     {
-        require_once dirname(__FILE__) . '/vendor/autoload.php';
-
         $Container = Container::getInstance();
 
         /**
