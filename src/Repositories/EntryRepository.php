@@ -1545,13 +1545,13 @@ class EntryRepository
         ];
 
         // 関連エントリーのEagerLoading
-        $eargerLoad['relatedEntry'] = $this->relatedEntryEagerLoad($entries, $config)
+        $eargerLoad['relatedEntry'] = $this->relatedEntryEagerLoad($entries, $config);
 
         // ユニットのEagerLoading
         $eargerLoad['unit'] = $this->unitEagerLoad($entries, $config);
 
         // モジュールのEagerLoading
-        $eargerLoad['module'] = $this->moduleEagerLoad($unitData, $config);
+        $eargerLoad['module'] = $this->moduleEagerLoad($eargerLoad['unit'], $config);
 
         // メディアのEagerLoading
         $eargerLoad['media'] = $this->mediaEagerLoad(
