@@ -34,5 +34,9 @@
       "composer lint",
       "composer format"
     ]
+  },
+  "volta": {
+    "node": "18.16.1",
+    "npm": "9.7.2"
   }
 }

@@ -8,6 +8,9 @@ const { zipPromise } = require('./lib/system.js');
 
 const { version } = require('../package.json');
 
+const srcDir = 'src'
+const zipDir = 'V2'
+
 const ignores = [
   '.git',
   '.gitignore',
@@ -35,15 +38,15 @@ co(function* () {
     /**
      * ready plugins files
      */
-    const copyFiles = fs.readdirSync('.');
-    fs.mkdirsSync('V2');
+    const copyFiles = fs.readdirSync(srcDir);
+    fs.mkdirsSync(zipDir);
     fs.mkdirsSync('build');
 
     /**
      * copy plugins files
      */
     copyFiles.forEach((file) => {
-      fs.copySync(`./${file}`, `V2/${file}`);
+      fs.copySync(`${srcDir}/${file}`, `${zipDir}/${file}`);
     });
 
     /**
@@ -52,13 +55,13 @@ co(function* () {
     console.log('Remove unused files.');
     console.log(ignores);
     ignores.forEach((path) => {
-      fs.removeSync(`V2/${path}`);
+      fs.removeSync(`${zipDir}/${path}`);
     });
 
-    yield zipPromise('V2', `./build/V2${version}.zip`);
+    yield zipPromise(zipDir, `./build/${zipDir}${version}.zip`);
   } catch (err) {
     console.log(err);
   } finally {
-    fs.removeSync('V2');
+    fs.removeSync(zipDir);
   }
 });
