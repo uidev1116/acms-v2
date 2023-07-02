@@ -1,5 +1,5 @@
 {
-  "name": "v2",
+  "name": "acms-v2",
   "version": "0.0.0",
   "description": "ビルトインモジュール Ver.2.0を提供する拡張アプリです。",
   "main": "index.js",
@@ -16,7 +16,11 @@
     "prepare": "husky install"
   },
   "author": "uidev1116",
-  "license": "ISC",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/uidev1116/acms-v2.git"
+  },
   "devDependencies": {
     "archiver": "^5.3.0",
     "co": "^4.6.0",
