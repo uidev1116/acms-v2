@@ -354,7 +354,6 @@ class Helper extends Base
             'sort' => $Category->getSort(),
             'name' => $Category->getName(),
             'pcid' => $Category->getCategoryParent(),
-            'scope' => $Category->getScope(),
             'indexing' => $Category->getIndexing(),
             'url' => $Category->getUrl(),
             ...($config['categoryFieldOn'] === 'on' ? $this->buildField(
@@ -501,7 +500,6 @@ class Helper extends Base
         $config = [
             ...$config,
             'relatedEntryOn' => 'off',
-            'fullTextOn' => 'off',
             'unitInfoOn' => 'off'
         ];
         return array_reduce(
@@ -615,39 +613,41 @@ class Helper extends Base
         array $context
     ): array {
         $currentUnitGroup = '';
-        $last = array_key_last($Units);
         return array_map(
             function (
                 Unit $Unit,
                 int $index
             ) use (
+                $Units,
                 $Tpl,
                 $block,
                 $config,
                 $context,
                 &$currentUnitGroup,
-                $last
             ) {
                 if (config('unit_group') === 'on') {
+                    $NextUnit = isset($Units[$index + 1]) ? $Units[$index + 1] : null;
                     $unitGroup = [
                         'open' => false,
                         'close' => false,
-                        'last' => false,
                     ];
                     if (!empty($Unit->getGroup())) {
+                        $currentUnitGroup = $Unit->isClearGroup() ? null : $Unit->getGroup();
                         $unitGroup = [
                             ...$unitGroup,
-                            ...(!$Unit->isClearGroup() ? [
+                            ...(!empty($currentUnitGroup) ? [
                                 'open' => true,
                             ] : []),
-                            'close' => !empty($currentUnitGroup)
                         ];
-                        $currentUnitGroup = $Unit->isClearGroup() ? null : $Unit->getGroup();
                     }
-                    if ($index === $last && !empty($currentUnitGroup)) {
+                    if (
+                        1 &&
+                        !empty($currentUnitGroup) &&
+                        (is_null($NextUnit) || !empty($NextUnit->getGroup()))
+                    ) {
                         $unitGroup = [
                             ...$unitGroup,
-                            'last' => true
+                            'close' => true
                         ];
                     }
                 }
@@ -777,7 +777,7 @@ class Helper extends Base
             if ($unitX > $config['imageX']) {
                 if ($unitY > $config['imageY']) {
                     if (($unitX - $config['imageX']) < ($unitY - $config['imageY'])) {
-                        $y   = $config['imageY'];
+                        $y = $config['imageY'];
                         if ($config['imageY'] > 0 && ($unitY / $config['imageY']) > 0) {
                             $x = round($unitX / ($unitY / $config['imageY']));
                         } else {

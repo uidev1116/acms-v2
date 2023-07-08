@@ -54,7 +54,7 @@ class ModuleUnit implements UnitInterface
             'align' => $this->Unit->getAlign(),
             'attr' => $this->Unit->getAttr(),
             'group' => $this->Unit->getGroup(),
-            'html' => Tpl::spreadModule(
+            'view' => Tpl::spreadModule(
                 $Module->getName(),
                 $Module->getIdentifier(),
                 $tpl

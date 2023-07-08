@@ -85,7 +85,7 @@ class MediaRepository
         $Media->setText($row['media_field_4']);
         $Media->setFocalPoint($row['media_field_5']);
         $Media->setPage(
-            isset($row['media_field_6']) ? intval($row['media_field_6']) : null
+            !empty($row['media_field_6']) ? intval($row['media_field_6']) : null
         );
 
         $Blog = new Blog();

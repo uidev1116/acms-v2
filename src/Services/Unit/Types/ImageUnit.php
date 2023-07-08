@@ -61,7 +61,7 @@ class ImageUnit implements UnitInterface
             'link' => $this->Unit->getField3(),
             'alt' => $this->Unit->getField4(),
             'displaySize' => $this->Unit->getField5(),
-            'eid' => $this->Unit->getEntry()->getId()
+            'exif' => $this->Unit->getField6(),
         ];
 
         $tinyPath = otherSizeImagePath($path, 'tiny');
