@@ -9,7 +9,7 @@
 
 ## ダウンロード
 
-[V2](https://github.com/uidev1116/acms-v2/tree/master/build/V2.zip)
+[V2](https://github.com/uidev1116/acms-v2/raw/master/build/V2.zip)
 
 ## インストール方法
 
