@@ -58,7 +58,8 @@ co(function* () {
       fs.removeSync(`${zipDir}/${path}`);
     });
 
-    yield zipPromise(zipDir, `./build/${zipDir}${version}.zip`);
+    yield zipPromise(zipDir, `./build/${zipDir}.zip`);
+    fs.copySync(`./build/${zipDir}.zip`, `./build/v${version}/${zipDir}.zip`);
   } catch (err) {
     console.log(err);
   } finally {

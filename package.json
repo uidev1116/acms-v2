@@ -5,13 +5,13 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "package": "rm -rf build/ && npm run setup && npm run build:app",
+    "package": "npm run setup && npm run build:app",
     "build:app": "node ./tools/build.js",
     "version:sync": "node ./tools/version.js",
     "release:commit": "node ./tools/commit.js",
-    "release:patch": "npm version patch --no-git-tag-version && npm run version:sync && npm run release:commit",
-    "release:minor": "npm version minor --no-git-tag-version && npm run version:sync && npm run release:commit",
-    "release:major": "npm version mejor --no-git-tag-version && npm run version:sync && npm run release:commit",
+    "release:patch": "npm version patch --no-git-tag-version && npm run version:sync && npm run package && npm run release:commit",
+    "release:minor": "npm version minor --no-git-tag-version && npm run version:sync && npm run package && npm run release:commit",
+    "release:major": "npm version mejor --no-git-tag-version && npm run version:sync && npm run package && npm run release:commit",
     "setup": "node ./tools/setup.js",
     "prepare": "husky install"
   },
