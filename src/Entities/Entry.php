@@ -129,6 +129,11 @@ class Entry
         );
     }
 
+    public function isFormEnable(): bool
+    {
+        return $this->formId > 0 && $this->formStatus === 'open';
+    }
+
     /**
      * ID
      */

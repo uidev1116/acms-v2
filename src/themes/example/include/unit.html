@@ -1,0 +1,58 @@
+<!-- BEGIN unit:loop -->
+
+<!-- BEGIN_IF [<!-- BEGIN unitGroup -->{open}<!-- END unitGroup -->/eq/1] -->
+<div class="js-unit_group-align acms-entry-unit-full {group}">
+<!-- END_IF -->
+
+<!-- BEGIN_IF [{align}/eq/center] -->
+<hr class="clearHidden">
+<!-- END_IF -->
+
+<!-- BEGIN_IF [{type}/eq/text] -->
+<!-- テキストユニット -->
+@include("/include/unit/text.html")
+<!-- ELSE_IF [{type}/eq/table] -->
+<!-- テーブルユニット -->
+@include("/include/unit/table.html")
+<!-- ELSE_IF [{type}/eq/image] -->
+<!-- 画像ユニット -->
+@include("/include/unit/image.html")
+<!-- ELSE_IF [{type}/eq/file] -->
+<!-- ファイルユニット -->
+@include("/include/unit/file.html")
+<!-- ELSE_IF [{type}/eq/map] -->
+<!-- Google Mapユニット -->
+@include("/include/unit/google-map.html")
+<!-- ELSE_IF [{type}/eq/osmap] -->
+<!-- Open Street Mapユニット -->
+@include("/include/unit/open-street-map.html")
+<!-- ELSE_IF [{type}/eq/video] -->
+<!-- ビデオユニット -->
+@include("/include/unit/video.html")
+<!-- ELSE_IF [{type}/eq/eximage] -->
+<!-- 外部画像ユニット -->
+@include("/include/unit/ex-image.html")
+<!-- ELSE_IF [{type}/eq/media] -->
+<!-- メディアユニット -->
+@include("/include/unit/media.html")
+<!-- ELSE_IF [{type}/eq/rich-editor] -->
+<!-- リッチエディターユニット -->
+@include("/include/unit/rich-editor.html")
+<!-- ELSE_IF [{type}/eq/quote] -->
+<!-- 引用ユニット -->
+@include("/include/unit/quote.html")
+<!-- ELSE_IF [{type}/eq/module] -->
+<!-- モジュールユニット -->
+@include("/include/unit/module.html")
+<!-- ELSE_IF [{type}/eq/break] -->
+<!-- 改ページユニット -->
+@include("/include/unit/break.html")
+<!-- ELSE -->
+<!-- カスタムユニット -->
+@include("/include/unit/custom.html")
+<!-- END_IF -->
+
+<!-- BEGIN_IF [<!-- BEGIN unitGroup -->{close}<!-- END unitGroup -->/eq/1] -->
+</div>
+<!-- END_IF -->
+<!-- END unit:loop -->

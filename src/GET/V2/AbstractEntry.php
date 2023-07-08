@@ -162,6 +162,9 @@ abstract class AbstractEntry extends ACMS_GET
                     return [
                         'loopClass' => $this->config['loopClass'],
                         ...$this->buildEntry($Entry, $Tpl, ['entry:loop']),
+                        ...(is_int($this->eid) && config('form_edit_action_direct') === 'on' ? [
+                            'isFormEnable' => $Entry->isFormEnable()
+                        ] : []),
                         ...(is_int($this->eid) && $this->config['microPager'] === 'on' ? [
                             'microPager' => $this->buildMicroPagenation($Entry)
                         ] : [])

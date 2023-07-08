@@ -1,0 +1,125 @@
+<!-- BEGIN_MODULE V2_Entry_Body id="{{module_id}}" -->
+<div>
+  <!-- BEGIN notFound -->
+  <p>ただいまページを準備しております。もうしばらくお待ちください。</p>
+  <!-- END notFound -->
+
+  <!-- BEGIN serialEntry:veil -->
+  <nav aria-label="ページ送り">
+    <ul class="acms-pager">
+      <li>
+        <!-- BEGIN prevNotFound -->prev not found<!-- END prevNotFound -->
+        <!-- BEGIN prevEntry -->
+        <a href="{url}">
+          {title}[trim(27, '...')]
+        </a>
+        <!-- END prevEntry -->
+      </li>
+      <li>
+        <!-- BEGIN nextNotFound -->next not found<!-- END nextNotFound -->
+        <!-- BEGIN nextEnry -->
+        <a href="{url}">
+          {title}[trim(27, '...')]
+        </a>
+        <!-- END nextEnry -->
+      </li>
+    </ul>
+  </nav>
+  <!-- END serialEntry:veil -->
+
+  <!-- BEGIN entry:loop -->
+  <div class="acms-page-header">
+    <!-- BEGIN pageHeader:veil -->
+    <div>
+      <p>
+        <!-- BEGIN date:veil -->
+        <time datetime="{date#Y}-{date#m}-{date#d}">{date#Y}年{date#m}月{date#d}日</time>
+        <!-- END date:veil -->
+        <!-- BEGIN category:veil -->
+        <!-- BEGIN category:veil -->
+        <span class="acms-label"><a href="{url}">{name}</a></span>
+        <!-- END category -->
+        <!-- END category:veil -->
+        <!-- BEGIN_IF [{isNew}/eq/1] -->
+        <span class="acms-label acms-label-warning">NEW</span>
+        <!-- END_IF -->
+      </p>
+    </div><!-- END pageHeader:veil -->
+    <h2><a href="{url}">{title}</a></h2>
+  </div>
+  <div>
+    <div>
+      <!-- BEGIN unit:veil -->
+      <div class="acms-entry">
+        <div class="acms-grid-r">
+        @include("/include/unit.html")
+        </div>
+      </div>
+      <hr class="clearHidden">
+      <!-- END unit:veil -->
+      <!-- BEGIN continue:veil -->
+      <p>
+        <a href="{continueUrl}" class="acms-btn-flat">
+          <span class="acms-icon-arrow-right"></span>
+          「{continueName}」の続きを読む
+        </a>
+      </p>
+      <!-- END continue:veil -->
+
+      <!-- BEGIN_IF [{isFormEnable}/eq/1] -->
+      @include("/include/form/unit.html")
+      <hr class="clearHidden">
+      <!-- END_IF -->
+
+      <!-- BEGIN tag:veil -->
+      <p>タグ：<!-- BEGIN tag:loop --><a href="{url}" class="acms-inline-space">{name}</a> <!-- END tag:loop --></p>
+      <!-- END tag:veil -->
+
+    </div>
+    <!-- BEGIN user:veil -->
+    <div>
+      <p class="acms-text-info">Posted by {name}</p>
+    </div>
+    <!-- END user:veil -->
+  </div>
+  <!-- END entry:loop -->
+
+  <!-- BEGIN pager:veil -->
+  <div class="acms-text-center">
+    <ul class="acms-pager">
+      <!-- BEGIN backLink -->
+      <li><a href="{url}">« 前の{backNum}件</a></li>
+      <!-- END backLink -->
+      <!-- BEGIN firstPage:veil -->
+      <li {pageCurAttr}[raw]>
+        <span>
+          <a href="{firstPageUrl}">{firstPage}</a>
+        </span>
+      </li>
+      <!-- END firstPage:veil -->
+      <!-- BEGIN page:loop -->
+      <li {pageCurAttr}[raw]>
+        <span>
+          <a href="{url}">{page}</a>
+        </span>
+      </li>
+      <!-- END page:loop -->
+      <!-- BEGIN lastPage:veil -->
+      <li>...</li>
+      <li {pageCurAttr}[raw]>
+        <span>
+          <a href="{lastPageUrl}">{lastPage}</a>
+        </span>
+      </li>
+      <!-- END lastPage:veil -->
+      <!-- BEGIN forwardLink -->
+      <li>
+        <a href="{url}">次の{forwardNum}件 »</a>
+      </li>
+      <!-- END forwardLink -->
+    </ul>
+  </div>
+  <!-- END pager:veil -->
+</div>
+
+<!-- END_MODULE Entry_Body -->
