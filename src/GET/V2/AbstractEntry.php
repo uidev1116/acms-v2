@@ -387,7 +387,7 @@ abstract class AbstractEntry extends ACMS_GET
     {
         return [
             'bid' => $this->bid,
-            'uid' => $this->bid,
+            'uid' => $this->uid,
             'cid' => $this->cid,
             'eid' => $this->eid,
             'keyword' => $this->keyword,
