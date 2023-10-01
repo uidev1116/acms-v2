@@ -1731,27 +1731,17 @@ class EntryRepository
             $sql->addWhereIn('column_entry_id', array_unique($entryIds));
             $sql->addWhereOpr('column_attr', 'acms-form', '<>');
             $sql->setOrder('column_sort', 'ASC');
+            $rows = DB::query($sql->get(dsn()), 'all');
 
-            return array_reduce(
-                DB::query($sql->get(dsn()), 'all'),
-                function (array $units, array $unit) {
-                    if (!array_key_exists(intval($unit['column_entry_id']), $units)) {
-                        return [
-                            ...$units,
-                            intval($unit['column_entry_id']) => [$unit]
-                        ];
-                    }
-
-                    return [
-                        ...$units,
-                        intval($unit['column_entry_id']) => [
-                            ...$units[intval($unit['column_entry_id'])],
-                            $unit
-                        ]
-                    ];
-                },
-                []
-            );
+            $data = [];
+            foreach ($rows as $row) {
+                $entryId = intval($row['column_entry_id']);
+                if (!isset($data[$entryId])) {
+                    $data[$entryId] = [];
+                }
+                $data[$entryId][] = $row;
+            }
+            return $data;
         }
         return [];
     }
