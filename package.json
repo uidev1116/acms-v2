@@ -1,6 +1,6 @@
 {
   "name": "acms-v2",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "ビルトインモジュール Ver.2.0を提供する拡張アプリです。",
   "main": "index.js",
   "scripts": {
