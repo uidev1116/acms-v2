@@ -41,7 +41,7 @@ class OpenStreetMapUnit implements UnitInterface
      */
     public function build(): array
     {
-        [$x, $y] = $this->Unit->getSize();
+        [$x, $y] = explode('x', $this->Unit->getSize());
         $message = str_replace(
             ['"', '<', '>', '&'],
             ['[[:quot:]]', '[[:lt:]]', '[[:gt:]]', '[[:amp:]]'],
