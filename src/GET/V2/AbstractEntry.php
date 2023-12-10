@@ -133,15 +133,16 @@ abstract class AbstractEntry extends ACMS_GET
 
         $Entries = $this->findEntries();
 
-        if ($this->config['notfound'] === 'on' && empty($Entries)) {
+        if (empty($Entries)) {
             return $Tpl->render([
                 ...($this->isModuleFieldEnabled() ? [
                     'moduleField' => $this->buildModuleField($Tpl, ['moduleField'])
                 ] : []),
-                'notFound' => $this->buildNotFound($Tpl),
+                ...($this->config['notfound'] === 'on' ? [
+                    'notFound' => $this->buildNotFound($Tpl),
+                ] : []),
                 ...$this->getRootVars()
             ]);
-            ;
         }
 
         if (
@@ -166,7 +167,7 @@ abstract class AbstractEntry extends ACMS_GET
                             'isFormEnable' => $Entry->isFormEnable()
                         ] : []),
                         ...(is_int($this->eid) && $this->config['microPager'] === 'on' ? [
-                            'microPager' => $this->buildMicroPagenation($Entry)
+                            'microPager' => $this->buildMicroPagination($Entry)
                         ] : [])
                     ];
                 },
@@ -175,7 +176,7 @@ abstract class AbstractEntry extends ACMS_GET
             ...(!is_int($this->eid) && // 詳細ページの場合
                 $this->config['order'][0] !== 'random' &&
                 $this->config['pagerOn'] === 'on'
-                ? ['pager' => $this->buildFullSpecPagenation()]
+                ? ['pager' => $this->buildFullSpecPagination()]
                 : []
             ),
             ...(is_int($this->eid) && // 詳細ページの場合
@@ -251,9 +252,9 @@ abstract class AbstractEntry extends ACMS_GET
      *
      * @return array
      */
-    protected function buildPagenation($page, $limit, $amount, $delta, $curAttr, $Q = [])
+    protected function buildPagination($page, $limit, $amount, $delta, $curAttr, $Q = [])
     {
-        return Tpl::buildPagenation($page, $limit, $amount, $delta, $curAttr, $Q);
+        return Tpl::buildPagination($page, $limit, $amount, $delta, $curAttr, $Q);
     }
 
     /**
@@ -261,11 +262,11 @@ abstract class AbstractEntry extends ACMS_GET
      *
      * @return array
      */
-    protected function buildFullspecPagenation()
+    protected function buildFullspecPagination()
     {
         $itemsAmount = intval(DB::query($this->amountQuery, 'one'));
         $itemsAmount -= $this->config['offset'];
-        return $this->buildPagenation(
+        return $this->buildPagination(
             intval($this->page),
             $this->config['limit'],
             $itemsAmount,
@@ -281,9 +282,9 @@ abstract class AbstractEntry extends ACMS_GET
      *
      * @return array
      */
-    protected function buildMicroPagenation(\Acms\Plugins\V2\Entities\Entry $Entry)
+    protected function buildMicroPagination(\Acms\Plugins\V2\Entities\Entry $Entry)
     {
-        return $this->buildPagenation(
+        return $this->buildPagination(
             intval($this->page),
             1,
             $Entry->getMicroPageAmount(),
