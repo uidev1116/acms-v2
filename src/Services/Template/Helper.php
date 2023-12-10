@@ -851,7 +851,7 @@ class Helper extends Base
      *
      * @return array
      */
-    public function buildPagenation(
+    public function buildPagination(
         int $page,
         int $limit,
         int $amount,
@@ -869,27 +869,31 @@ class Helper extends Base
         $from = ($page - 1) * $limit;
         $to = ($amount < $from + $limit) ? $amount : $from + $limit;
 
+        $lastPage = intval(ceil($amount / $limit));
+        $fromPage = 1 > ($page - $delta) ? 1 : ($page - $delta);
+        $toPage = $lastPage < ($page + $delta) ? $lastPage : ($page + $delta);
+
         $vars = [
             'itemsAmount' => $amount,
             'itemsFrom' => $from + 1,
             'itemsTo' => $to,
-            'backLink' => [],
-            'firstPageUrl' => null,
-            'firstPage' => null,
-            'page' => [],
-            'forwardLink' => [],
-            'lastPageUrl' => null,
-            'lastPage' => null
+            'firstPageUrl' => acmsLink([
+                ...$Q,
+                'page' => 1,
+            ]),
+            'firstPage' => 1,
+            'lastPageUrl' => acmsLink([
+                ...$Q,
+                'page' => $lastPage,
+            ]),
+            'lastPage' => $lastPage,
         ];
-
-        $lastPage = intval(ceil($amount / $limit));
-        $fromPage = 1 > ($page - $delta) ? 1 : ($page - $delta);
-        $toPage = $lastPage < ($page + $delta) ? $lastPage : ($page + $delta);
 
         if ($lastPage > 1) {
             $vars['page'] = array_map(
                 function (int $page) use ($curAttr, $Q) {
                     return [
+                        'page' => $page,
                         'url' => acmsLink([
                             ...$Q,
                             'page' => $page
@@ -901,28 +905,6 @@ class Helper extends Base
                 },
                 range($fromPage, $toPage)
             );
-        }
-
-        if ($toPage !== $lastPage) {
-            $vars = [
-                ...$vars,
-                'lastPageUrl' => acmsLink([
-                    ...$Q,
-                    'page' => $lastPage,
-                ]),
-                'lastPage' => $lastPage,
-            ];
-        }
-
-        if (1 < $fromPage) {
-            $vars = [
-                ...$vars,
-                'firstPageUrl' => acmsLink([
-                    ...$Q,
-                    'page' => 1,
-                ]),
-                'firstPage' => 1,
-            ];
         }
 
         if (1 < $page) {
