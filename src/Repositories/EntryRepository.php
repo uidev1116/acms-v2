@@ -1769,10 +1769,7 @@ class EntryRepository
             return array_reduce(
                 $this->ModuleRepository->findByIds(array_unique($moduleIds)),
                 function (array $modules, Module $Module) {
-                    return [
-                        ...$modules,
-                        $Module->getId() => $Module
-                    ];
+                    return $modules + [$Module->getId() => $Module];
                 },
                 []
             );
@@ -1841,10 +1838,7 @@ class EntryRepository
         return array_reduce(
             $Medias,
             function (array $medias, Media $Media) {
-                return [
-                    ...$medias,
-                    $Media->getId() => $Media
-                ];
+                return $medias + [$Media->getId() => $Media];
             },
             []
         );
