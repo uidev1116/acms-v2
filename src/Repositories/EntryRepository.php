@@ -157,10 +157,7 @@ class EntryRepository
         $medias = array_reduce(
             $this->MediaRepository->findByIds(array_unique($mids)),
             function (array $medias, Media $Media) {
-                return [
-                    ...$medias,
-                    $Media->getId() => $Media
-                ];
+                return $medias + [$Media->getId() => $Media];
             },
             []
         );
